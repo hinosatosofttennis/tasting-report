@@ -270,6 +270,6 @@ window.whiteWineData = {
         {"comment": "中庸"},
         {"comment": "大ぶり"}
       ]
-    },
+    }
   }
 };
