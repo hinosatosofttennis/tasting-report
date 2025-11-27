@@ -41,14 +41,13 @@ const METADATA_SELECTIONS = {
         { value: "sauvignon_blanc", label: "ソーヴィニヨン・ブラン" },
         { value: "riesling", label: "リースリング" },
         { value: "pinot_gris", label: "ピノ・グリ" },
+        { value: "pinot_gris", label: "甲州" },
+        { value: "pinot_gris", label: "シュナン・ブラン" },
+        { value: "pinot_gris", label: "ゲヴュルツトラミネール" },
+        { value: "pinot_gris", label: "ヴィオニエ" },
+        { value: "pinot_gris", label: "セミヨン" },
+        { value: "pinot_gris", label: "ミュスカデ" },
         { value: "other", label: "その他" }
-      "甲州",
-      "シュナン・ブラン",
-      "ゲヴュルツトラミネール",
-      "ヴィオニエ",
-      "セミヨン",
-      "ミュスカデ",
-      "その他"
     ],
     // 赤ワインのブドウ品種
     redGrapes: [
@@ -57,13 +56,12 @@ const METADATA_SELECTIONS = {
         { value: "pinot_noir", label: "ピノ・ノワール" },
         { value: "syrah", label: "シラー" },
         { value: "sangiovese", label: "サンジョヴェーゼ" },
+        { value: "sangiovese", label: "カベルネ・フラン" },
+        { value: "sangiovese", label: "グルナッシュ" },
+        { value: "sangiovese", label: "ネッビオーロ" },
+        { value: "sangiovese", label: "テンプラニーリョ" },
+        { value: "sangiovese", label: "マスカット・ベーリーA" },
         { value: "other", label: "その他" }
-      "カベルネ・フラン",
-      "グルナッシュ",
-      "ネッビオーロ",
-      "テンプラニーリョ",
-      "マスカット・ベーリーA",
-      "その他"
     ]
 };
 
