@@ -147,7 +147,7 @@ window.whiteWineData = {
           {"comment": "フェノール"},
           {"comment": "麝香"},
           {"comment": "花の蜜"},
-          {"comment": "蜂蜜"}
+          {"comment": "蜂蜜"},
           {"comment": "ワックス"},
           {"comment": "蜜蝋"},
         ]
