@@ -42,7 +42,13 @@ const METADATA_SELECTIONS = {
         { value: "riesling", label: "リースリング" },
         { value: "pinot_gris", label: "ピノ・グリ" },
         { value: "other", label: "その他" }
-        
+      "甲州",
+      "シュナン・ブラン",
+      "ゲヴュルツトラミネール",
+      "ヴィオニエ",
+      "セミヨン",
+      "ミュスカデ",
+      "その他"
     ],
     // 赤ワインのブドウ品種
     redGrapes: [
