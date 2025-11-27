@@ -42,6 +42,7 @@ const METADATA_SELECTIONS = {
         { value: "riesling", label: "リースリング" },
         { value: "pinot_gris", label: "ピノ・グリ" },
         { value: "other", label: "その他" }
+        
     ],
     // 赤ワインのブドウ品種
     redGrapes: [
@@ -51,6 +52,12 @@ const METADATA_SELECTIONS = {
         { value: "syrah", label: "シラー" },
         { value: "sangiovese", label: "サンジョヴェーゼ" },
         { value: "other", label: "その他" }
+      "カベルネ・フラン",
+      "グルナッシュ",
+      "ネッビオーロ",
+      "テンプラニーリョ",
+      "マスカット・ベーリーA",
+      "その他"
     ]
 };
 
