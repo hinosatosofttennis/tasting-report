@@ -43,14 +43,14 @@ window.whiteWineData = {
         ]
       },
       "外観の印象": {
-        "熟成度": [
+        "若さ": [
           {"comment": "若々しい"},
           {"comment": "やや発展した"},
           {"comment": "熟成のニュアンスが見える"},
           {"comment": "熟成した"},
           {"comment": "酸化が進んだ"}
         ],
-        "若さ/成熟度": [
+        "成熟度": [
           {"comment": "軽快な"},
           {"comment": "成熟度が高い"},
           {"comment": "濃縮感がある"}
@@ -64,20 +64,16 @@ window.whiteWineData = {
     },
     "香り": {
       "第一印象": {
-        "弱→強": [
+        "強さ": [
           {"comment": "閉じている"},
           {"comment": "控えめ"},
           {"comment": "開いている"},
           {"comment": "力強い"}
-        ]
-      },
-      "強さ/性質": {
+        ],
         "性質": [
           {"comment": "フレッシュな"},
           {"comment": "チャーミングな"},
-          {"comment": "華やか"}
-        ],
-        "強さ/性質": [
+          {"comment": "華やか"},
           {"comment": "熟度の高い"},
           {"comment": "豊かな"},
           {"comment": "濃縮感がある"},
@@ -93,9 +89,7 @@ window.whiteWineData = {
           {"comment": "洋梨"},
           {"comment": "マスカット"},
           {"comment": "花梨"},
-          {"comment": "パッションフルーツ"}
-        ],
-        "熟度低→高": [
+          {"comment": "パッションフルーツ"},
           {"comment": "白桃"},
           {"comment": "アプリコット"},
           {"comment": "パイナップル"},
@@ -146,25 +140,27 @@ window.whiteWineData = {
           {"comment": "煙、薫製"}
         ],
         "化学物質/他": [
+          {"comment": "硫黄"},
           {"comment": "ペトロール (ケロセン)"},
           {"comment": "パン・ド・ミ"},
           {"comment": "乳製品"},
           {"comment": "フェノール"},
           {"comment": "麝香"},
           {"comment": "花の蜜"},
-          {"comment": "硫黄"},
+          {"comment": "蜂蜜"}
           {"comment": "ワックス"},
           {"comment": "蜜蝋"},
-          {"comment": "蜂蜜"}
         ]
       },
       "香りの印象": {
-        "熟成感/特性": [
+        "熟成感": [
           {"comment": "若々しい"},
           {"comment": "嫌気的な"},
           {"comment": "発展的な"},
           {"comment": "熟成感が現れている"},
-          {"comment": "酸化熟成の段階"},
+          {"comment": "酸化熟成の段階"}
+        ],
+        "特性": [
           {"comment": "第1アロマが強い"},
           {"comment": "第2アロマが強い"},
           {"comment": "ニュートラル"},
@@ -212,19 +208,24 @@ window.whiteWineData = {
         {"comment": "強い(突出した)"}
       ],
       "バランス": {
-        "骨格/テクスチャー": [
-          {"comment": "左下/左上/右上/右下"},
-          {"comment": "豊潤な"},
-          {"comment": "厚みのある"},
-          {"comment": "まろやかな"},
-          {"comment": "ふくよかな"},
-          {"comment": "ねっとりした"},
+        "左下": [
           {"comment": "スムーズな"},
-          {"comment": "コンパクトな"},
+          {"comment": "コンパクトな"}
+        ],
+        "左上": [
           {"comment": "スリムな"},
           {"comment": "ドライな"},
-          {"comment": "引き締まった"},
-          {"comment": "ジューシーな"}
+          {"comment": "引き締まった"}
+        ],
+        "右上": [
+          {"comment": "ジューシーな"},
+          {"comment": "豊潤な"},
+          {"comment": "厚みのある"}
+        ],
+        "右下": [
+          {"comment": "まろやかな"},
+          {"comment": "ふくよかな"},
+          {"comment": "ねっとりした"}
         ]
       },
       "アルコール": {
