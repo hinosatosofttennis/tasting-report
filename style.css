@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f9;
+    color: #333;
 }
 
 header {
@@ -37,18 +38,18 @@ main {
 }
 
 /* セクションの表示/非表示 */
-section.hidden {
-    display: none;
-}
-
-/* フォームの共通スタイル */
-#record-area {
+section {
     background-color: white;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 0 5px 5px 5px;
 }
 
+section.hidden {
+    display: none;
+}
+
+/* フォームの共通スタイル */
 fieldset {
     border: 1px solid #ccc;
     padding: 15px;
@@ -99,6 +100,7 @@ textarea#free-text {
     color: #800000;
     cursor: pointer;
     border-radius: 20px;
+    transition: background-color 0.3s;
 }
 
 .wine-type-toggle button.active {
@@ -186,13 +188,25 @@ button[type="submit"]:hover, #export-data-btn:hover {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
+    font-size: 0.9em;
 }
 
 #tasting-list-table th {
     background-color: #eee;
 }
 
-/* ... (style.css の既存スタイルに追加) ... */
+#tasting-list-table button {
+    padding: 5px 8px;
+    margin: 2px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+}
+
+/* ================================== */
+/* 詳細表示モーダルのスタイル */
+/* ================================== */
 
 /* モーダル背景 */
 .modal {
@@ -241,13 +255,22 @@ button[type="submit"]:hover, #export-data-btn:hover {
     cursor: pointer;
 }
 
+/* 詳細表示の画像コンテナ */
+.detail-photos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 10px 0;
+}
+
 /* 詳細表示の画像スタイル */
 .detail-photos img {
     width: 150px;
     height: 150px;
     object-fit: cover;
-    margin-right: 10px;
     border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 .detail-notes {
@@ -261,4 +284,5 @@ button[type="submit"]:hover, #export-data-btn:hover {
     border-bottom: 1px dashed #ddd;
     padding-bottom: 5px;
     margin-bottom: 10px;
+    font-size: 1.1em;
 }
