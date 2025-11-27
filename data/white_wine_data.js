@@ -253,7 +253,7 @@ window.whiteWineData = {
           {"comment": "シンプル、フレッシュ感を楽しむ"},
           {"comment": "エレガントでミネラリー"},
           {"comment": "なめらかでバランスが良い"},
-          {"comment": "ポテンシャルの高い"}
+          {"comment": "ポテンシャルの高い"},
           {"comment": "成熟度が高く豊か"},
           {"comment": "濃縮し力強い"}
         ]
