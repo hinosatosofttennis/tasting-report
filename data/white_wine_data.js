@@ -82,7 +82,7 @@ window.whiteWineData = {
         ]
       },
       "果実": {
-        "フレッシュな果実": [
+        "熟度低→高": [
           {"comment": "柑橘類"},
           {"comment": "青リンゴ"},
           {"comment": "リンゴ"},
@@ -139,7 +139,7 @@ window.whiteWineData = {
           {"comment": "ヴァニラ"},
           {"comment": "煙、薫製"}
         ],
-        "化学物質/他": [
+        "他": [
           {"comment": "硫黄"},
           {"comment": "ペトロール (ケロセン)"},
           {"comment": "パン・ド・ミ"},
@@ -249,13 +249,11 @@ window.whiteWineData = {
     },
     "評価": {
       "評価": {
-        "特徴": [
+        "軽→重": [
           {"comment": "シンプル、フレッシュ感を楽しむ"},
           {"comment": "エレガントでミネラリー"},
           {"comment": "なめらかでバランスが良い"},
           {"comment": "ポテンシャルの高い"}
-        ],
-        "軽→重": [
           {"comment": "成熟度が高く豊か"},
           {"comment": "濃縮し力強い"}
         ]
