@@ -266,9 +266,9 @@ window.redWineData = {
     // ▼▼▼ ここから修正 ▼▼▼
     "その他": {
       "記述項目": [
-        { "label": "収穫年", "value": "" },       // value: "" に年を入力する想定
-        { "label": "生産国", "value": "" },       // value: "" に国名を入力する想定
-        { "label": "主なブドウ品種", "value": "" } // value: "" に品種を入力する想定
+        { "comment": "収穫年", "value": "" },
+        { "comment": "生産国", "value": "" },
+        { "comment": "主なブドウ品種", "value": "" }
       ]
     }
     // ▲▲▲ ここまで修正 ▲▲▲
