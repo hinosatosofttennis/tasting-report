@@ -236,7 +236,7 @@ window.redWineData = {
           {"comment": "やや長い"},
           {"comment": "長い"}
         ]
-      }
+      },
     },
     "評価": {
       "評価": {
