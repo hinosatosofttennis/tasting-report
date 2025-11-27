@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍷 ワインテイスティング記録アプリ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>ワインテイスティング記録</h1>
+    </header>
+
+    <main>
+        <div class="tab-controls">
+            <button id="record-tab" class="active">📝 新規記録</button>
+            <button id="list-tab">📋 記録リスト</button>
+        </div>
+
+        <section id="record-area" class="active">
+            <h2>テイスティング記録 (新規)</h2>
+            <form id="tasting-form">
+
+                <fieldset class="basic-info-group">
+                    <legend>基本情報</legend>
+
+                    <div class="form-row">
+                        <label for="wine-name">ワイン名 (タイトル)</label>
+                        <input type="text" id="wine-name" name="wineName" required>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="recorder-name">記録者名</label>
+                        <input type="text" id="recorder-name" name="recorderName" required>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="record-date">記録日時</label>
+                        <input type="datetime-local" id="record-date" name="recordDate" required>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="free-text">自由記入欄 (100字まで)</label>
+                        <textarea id="free-text" name="freeText" maxlength="100"></textarea>
+                    </div>
+                </fieldset>
+
+                <div class="wine-type-toggle">
+                    <button type="button" id="toggle-white" data-type="white" class="active">🥂 白ワイン</button>
+                    <button type="button" id="toggle-red" data-type="red">🍷 赤ワイン</button>
+                </div>
+
+                <fieldset class="photo-upload-group">
+                    <legend>写真追加 (2〜4枚)</legend>
+                    <input type="file" id="wine-photos" name="winePhotos" accept="image/*" multiple>
+                    <p class="file-limit-note">※最大4枚まで選択可能です。</p>
+                    <div id="photo-preview-container" class="preview-container">
+                        <p>選択された写真がここに表示されます。</p>
+                    </div>
+                </fieldset>
+                
+                <div id="tasting-sections">
+                    <p class="placeholder-text">ワインタイプを選択してください。</p>
+                </div>
+                
+                <button type="submit" id="save-record-btn">💾 記録を保存</button>
+            </form>
+        </section>
+
+        <section id="list-area" class="hidden">
+            <h2>記録リスト</h2>
+            <div id="list-controls">
+                <p>フィルタリングやデータ書き出しボタンがここに配置されます。</p>
+            </div>
+            <table id="tasting-list-table">
+                <thead>
+                    <tr>
+                        <th>日時</th>
+                        <th>記録者</th>
+                        <th>ワイン名</th>
+                        <th>タイプ</th>
+                        <th>コメント要約</th>
+                        <th>写真</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="list-body">
+                    </tbody>
+            </table>
+            <button id="export-data-btn">📤 データ書き出し (CSV/JSON)</button>
+        </section>
+    </main>
+
+    <script src="data/white_wine_data.js"></script>
+    <script src="data/red_wine_data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
