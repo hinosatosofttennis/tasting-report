@@ -63,14 +63,12 @@ window.redWineData = {
     },
     "香り": {
       "第一印象": {
-        "弱→強": [
+        "強さ": [
           {"comment": "閉じている"},
           {"comment": "控えめ"},
           {"comment": "開いている"},
           {"comment": "強い"}
-        ]
-      },
-      "強さ/性質": {
+        ],
         "性質": [
           {"comment": "チャーミングな"},
           {"comment": "華やかな"},
@@ -157,7 +155,7 @@ window.redWineData = {
           {"comment": "熟成感が現れている"},
           {"comment": "酸化熟成の段階にある"},
           {"comment": "酸化した"}
-        ]
+        ],
          "特性": [
           {"comment": "第1アロマが強い"},
           {"comment": "第2アロマが強い"},
@@ -211,12 +209,12 @@ window.redWineData = {
           {"comment": "骨格のしっかりとした"},
           {"comment": "堅固な"},
           {"comment": "痩せた、渇いた"}
-        ]
+        ],
         "右上": [
           {"comment": "ジューシーな"},
           {"comment": "豊満な"},
           {"comment": "力強い"}
-        ]
+        ],
         "下": [
           {"comment": "流れるような"},
           {"comment": "ふくよかな"}
