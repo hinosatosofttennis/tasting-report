@@ -272,12 +272,5 @@ window.whiteWineData = {
         {"comment": "大ぶり"}
       ]
     },
-    "その他": {
-      "記述項目": [
-        {"comment": "収穫年"},
-        {"comment": "生産地"},
-        {"comment": "主なブドウ品種"}
-      ]
-    }
   }
 };
