@@ -1,9 +1,10 @@
 // =======================================================
-// データ定義 (white_wine_data.js, red_wine_data.js から読み込まれることを想定)
+// グローバル変数とDOM要素の定義
+// =======================================================
+
+// JSONデータはHTMLで読み込まれていることを想定
 // 例: const whiteWineData = { "白ワイン": { ... } };
 // 例: const redWineData = { "赤ワイン": { ... } };
-// 実際にはHTMLの<script>タグで読み込まれているため、ここでは宣言を省略します。
-// =======================================================
 
 const ELEMENTS = {
     tastingSections: document.getElementById('tasting-sections'),
@@ -16,13 +17,22 @@ const ELEMENTS = {
     listArea: document.getElementById('list-area'),
     recordTab: document.getElementById('record-tab'),
     listTab: document.getElementById('list-tab'),
-    // ... 他の要素も必要に応じて追加
+    listBody: document.getElementById('list-body'),
+    detailModal: document.getElementById('detail-modal'),
+    detailContent: document.getElementById('detail-content'),
+    closeBtn: document.querySelector('.modal-content .close-btn'),
+    exportButton: document.getElementById('export-data-btn')
 };
 
+const DB_NAME = 'TastingRecordDB';
+const DB_VERSION = 1;
+const STORE_NAME = 'tastings';
+let db;
 let currentWineType = 'white'; // 現在選択中のワインタイプ
 
+
 // =======================================================
-// A. 動的なフォーム生成とタイプ切替
+// A. 動的なフォーム生成
 // =======================================================
 
 /**
@@ -31,7 +41,6 @@ let currentWineType = 'white'; // 現在選択中のワインタイプ
  * @returns {string} 生成されたHTML文字列
  */
 function generateTastingSections(wineData) {
-    // データ構造のトップレベルキー (例: "白ワイン" または "赤ワイン") を取得
     const typeKey = Object.keys(wineData)[0];
     const data = wineData[typeKey];
     let html = '';
@@ -42,6 +51,7 @@ function generateTastingSections(wineData) {
                     <legend>${majorKey}</legend>`;
         
         const majorData = data[majorKey];
+        
         // 中項目 (例: "清澄度", "色調", "粘性"...) のループ
         for (const middleKey in majorData) {
             const middleData = majorData[middleKey];
@@ -52,6 +62,7 @@ function generateTastingSections(wineData) {
                             <h3>${middleKey}</h3>
                             <div class="tasting-subcategory">`;
                  middleData.forEach(item => {
+                    // name属性は Major_Middle の形式でユニークにする
                     html += `<div class="tasting-comment">
                                 <label>
                                     <input type="checkbox" name="${majorKey}_${middleKey}" value="${item.comment}">
@@ -110,13 +121,6 @@ function switchWineType(type) {
     ELEMENTS.tastingSections.innerHTML = generateTastingSections(data);
 }
 
-// 初期ロード時のフォーム生成
-switchWineType('white');
-
-// イベントリスナーの設定
-ELEMENTS.toggleWhite.addEventListener('click', () => switchWineType('white'));
-ELEMENTS.toggleRed.addEventListener('click', () => switchWineType('red'));
-
 
 // =======================================================
 // B. 写真プレビュー機能 (最大4枚、画質優先)
@@ -157,8 +161,7 @@ ELEMENTS.winePhotosInput.addEventListener('change', (event) => {
             ELEMENTS.photoPreviewContainer.appendChild(img);
         };
 
-        // ファイルをData URL (Base64) として読み込む
-        // 画質優先のため、ここではリサイズせずにそのまま読み込みます。
+        // ファイルをData URL (Base64) として読み込む (画質優先のためそのまま保存)
         reader.readAsDataURL(file);
     });
 });
@@ -183,27 +186,13 @@ function switchTab(tabId) {
 ELEMENTS.recordTab.addEventListener('click', () => switchTab('record-tab'));
 ELEMENTS.listTab.addEventListener('click', () => {
     switchTab('list-tab');
-    // リストタブに切り替えた際、記録リストを読み込む処理をここに追加する (IndexedDBから)
-    // loadRecordList();
+    loadRecordList(); 
 });
 
-// =======================================================
-// D. 記録保存処理 (ダミー - 次のステップでIndexedDBを実装)
-// =======================================================
 
-// ELEMENTS.tastingForm.addEventListener('submit', (e) => {
-//     e.preventDefault();
-//     alert('フォーム送信を検知しました。次のステップでIndexedDBへの保存ロジックを実装します！');
-//     // ここにフォームデータの収集とIndexedDBへの保存ロジックが入ります。
-// });
 // =======================================================
-// E. IndexedDB セットアップと操作
+// D. IndexedDB セットアップと操作
 // =======================================================
-
-const DB_NAME = 'TastingRecordDB';
-const DB_VERSION = 1;
-const STORE_NAME = 'tastings';
-let db;
 
 /**
  * IndexedDBデータベースを開き、初期設定を行う
@@ -211,14 +200,11 @@ let db;
  */
 function openDB() {
     return new Promise((resolve, reject) => {
-        // ブラウザ互換性を考慮し、ベンダープレフィックスをチェック
         const request = indexedDB.open(DB_NAME, DB_VERSION);
 
-        // データベースのバージョンが上がったとき、または初回作成時
         request.onupgradeneeded = (event) => {
             const tempDb = event.target.result;
             if (!tempDb.objectStoreNames.contains(STORE_NAME)) {
-                // オブジェクトストアを作成し、一意のID（recordId）でインデックスを設定
                 const objectStore = tempDb.createObjectStore(STORE_NAME, { keyPath: 'recordId' });
                 objectStore.createIndex('date', 'date', { unique: false });
                 console.log('IndexedDB ObjectStore created/upgraded.');
@@ -279,7 +265,27 @@ function getAllRecords() {
         };
     });
 }
-// ... (E. IndexedDB セットアップと操作 の後に追加) ...
+
+/**
+ * データベースから単一の記録を取得する
+ * @param {string} recordId - 取得する記録のID
+ * @returns {Promise<object>} 記録データ
+ */
+function getRecordById(recordId) {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction([STORE_NAME], 'readonly');
+        const store = transaction.objectStore(STORE_NAME);
+        const request = store.get(recordId);
+
+        request.onsuccess = (event) => {
+            resolve(event.target.result);
+        };
+
+        request.onerror = (event) => {
+            reject(event.target.error);
+        };
+    });
+}
 
 /**
  * IndexedDBから指定されたIDのテイスティング記録を削除する
@@ -303,31 +309,9 @@ function deleteRecordFromDB(recordId) {
     });
 }
 
-/**
- * 記録を削除し、リストを更新する
- * @param {string} recordId - 削除する記録のID
- */
-async function deleteRecord(recordId) {
-    if (confirm('この記録を完全に削除してもよろしいですか？')) {
-        try {
-            await deleteRecordFromDB(recordId);
-            alert('記録が削除されました。');
-            loadRecordList(); // リストを再読み込みして更新
-        } catch (error) {
-            console.error('記録の削除エラー:', error);
-            alert('記録の削除中にエラーが発生しました。');
-        }
-    }
-}
-
-// アプリケーション起動時にDBを開く
-openDB().catch(err => {
-    alert('データベースの初期化に失敗しました。記録の保存ができません。');
-});
-
 
 // =======================================================
-// F. フォームデータ収集と保存ロジック
+// E. フォームデータ収集と保存ロジック
 // =======================================================
 
 /**
@@ -339,7 +323,7 @@ async function collectAndSaveRecord(e) {
 
     // 1. 基本情報の収集
     const form = e.target;
-    const recordId = Date.now().toString(); // 一意のIDとしてタイムスタンプを使用
+    const recordId = Date.now().toString(); 
 
     const formData = {
         recordId: recordId,
@@ -355,7 +339,6 @@ async function collectAndSaveRecord(e) {
     // 2. チェックボックスデータの収集
     const checkedInputs = form.querySelectorAll('input[type="checkbox"]:checked');
     checkedInputs.forEach(input => {
-        // name属性 (例: "外観_清澄度" や "香り_果実_熟度低→高") をキーとして使用
         const name = input.name; 
         if (!formData.tastingNotes[name]) {
             formData.tastingNotes[name] = [];
@@ -365,12 +348,11 @@ async function collectAndSaveRecord(e) {
 
     // 3. 画像データの収集 (Base64エンコード)
     const files = ELEMENTS.winePhotosInput.files;
-    const filesToProcess = Array.from(files).slice(0, 4); // 4枚制限を再確認
+    const filesToProcess = Array.from(files).slice(0, 4); 
 
     for (const file of filesToProcess) {
         if (!file.type.startsWith('image/')) continue;
 
-        // Base64エンコードは非同期処理
         const base64Image = await new Promise(resolve => {
             const reader = new FileReader();
             reader.onload = (e) => resolve(e.target.result);
@@ -383,9 +365,8 @@ async function collectAndSaveRecord(e) {
     try {
         await saveRecordToDB(formData);
         alert('テイスティング記録を保存しました！');
-        form.reset(); // フォームをリセット
-        ELEMENTS.photoPreviewContainer.innerHTML = '<p>選択された写真がここに表示されます。</p>'; // プレビューをクリア
-        // 記録リストを更新
+        form.reset(); 
+        ELEMENTS.photoPreviewContainer.innerHTML = '<p>選択された写真がここに表示されます。</p>'; 
         loadRecordList(); 
     } catch (error) {
         console.error('保存エラー:', error);
@@ -393,18 +374,88 @@ async function collectAndSaveRecord(e) {
     }
 }
 
-// フォーム送信時に保存ロジックを実行
-ELEMENTS.tastingForm.addEventListener('submit', collectAndSaveRecord);
-
 
 // =======================================================
-// G. 記録リスト表示ロジック
+// F. 記録リスト表示、詳細、削除ロジック
 // =======================================================
 
-const ELEMENTS_LIST = {
-    listBody: document.getElementById('list-body'),
-    // ...
-};
+/**
+ * 記録を削除し、リストを更新する
+ * @param {string} recordId - 削除する記録のID
+ */
+async function deleteRecord(recordId) {
+    if (confirm('この記録を完全に削除してもよろしいですか？')) {
+        try {
+            await deleteRecordFromDB(recordId);
+            alert('記録が削除されました。');
+            loadRecordList(); 
+        } catch (error) {
+            console.error('記録の削除エラー:', error);
+            alert('記録の削除中にエラーが発生しました。');
+        }
+    }
+}
+
+/**
+ * 記録の詳細をモーダルで表示する
+ * @param {string} recordId - 表示する記録のID
+ */
+async function showRecordDetail(recordId) {
+    try {
+        const record = await getRecordById(recordId);
+        if (!record) {
+            alert('記録が見つかりませんでした。');
+            return;
+        }
+
+        // 日時整形
+        const formattedDate = new Date(record.date).toLocaleString('ja-JP', {
+            year: 'numeric', month: '2-digit', day: '2-digit', 
+            hour: '2-digit', minute: '2-digit'
+        });
+
+        // 画像のHTMLを生成
+        const photoHtml = record.images.length > 0 ? 
+            `<div class="detail-photos">${record.images.map(base64 => 
+                `<img src="${base64}" alt="ワイン写真" class="photo-preview">`
+            ).join('')}</div>` : 
+            '<p>写真はありません。</p>';
+
+        // テイスティングコメントのHTMLを整形
+        let notesHtml = '';
+        for (const name in record.tastingNotes) {
+            // 例: "外観_清澄度" や "香り_果実_熟度低→高" を整形
+            const title = name.replace(/_/g, ' / ').replace(/ /g, '');
+            notesHtml += `
+                <h4>${title}</h4>
+                <p>${record.tastingNotes[name].join('、')}</p>
+            `;
+        }
+
+        // 詳細コンテンツの構築
+        ELEMENTS.detailContent.innerHTML = `
+            <h3>${record.wineName} (${record.wineType})</h3>
+            <p><strong>記録者:</strong> ${record.recorder}</p>
+            <p><strong>記録日時:</strong> ${formattedDate}</p>
+            
+            <h4>写真 (${record.images.length}枚)</h4>
+            ${photoHtml}
+
+            <h4>自由記入欄</h4>
+            <p>${record.freeText || '（記入なし）'}</p>
+
+            <div class="detail-notes">
+                <h3>テイスティングコメント詳細</h3>
+                ${notesHtml || '<p>チェックされたコメントはありません。</p>'}
+            </div>
+        `;
+
+        ELEMENTS.detailModal.classList.add('visible');
+    } catch (error) {
+        console.error('詳細表示エラー:', error);
+        alert('詳細情報の読み込み中にエラーが発生しました。');
+    }
+}
 
 /**
  * IndexedDBから記録を読み込み、リスト画面に表示する
@@ -412,35 +463,34 @@ const ELEMENTS_LIST = {
 async function loadRecordList() {
     try {
         const records = await getAllRecords();
-        ELEMENTS_LIST.listBody.innerHTML = ''; // リストをクリア
+        ELEMENTS.listBody.innerHTML = ''; 
 
         if (records.length === 0) {
-            ELEMENTS_LIST.listBody.innerHTML = '<tr><td colspan="7">まだテイスティング記録がありません。</td></tr>';
+            ELEMENTS.listBody.innerHTML = '<tr><td colspan="7">まだテイスティング記録がありません。</td></tr>';
             return;
         }
 
         records.sort((a, b) => new Date(b.date) - new Date(a.date)); // 日付の新しい順にソート
 
         records.forEach(record => {
-            const row = ELEMENTS_LIST.listBody.insertRow();
+            const row = ELEMENTS.listBody.insertRow();
             
-            // 1. 日時 (ISO形式から整形)
+            // 日時整形
             const formattedDate = new Date(record.date).toLocaleString('ja-JP', {
                 year: 'numeric', month: '2-digit', day: '2-digit', 
                 hour: '2-digit', minute: '2-digit'
             });
             
-            // 2. コメント要約 (自由記入欄を使用)
+            // コメント要約 (自由記入欄を使用)
             const commentSummary = record.freeText.length > 30 
                 ? record.freeText.substring(0, 30) + '...' 
                 : record.freeText || 'なし';
 
-            // 3. 写真有無アイコン
+            // 写真有無アイコン
             const photoIcon = record.images && record.images.length > 0 
                 ? `📸 (${record.images.length}枚)` 
                 : '❌';
 
-            // データの挿入
             row.innerHTML = `
                 <td>${formattedDate}</td>
                 <td>${record.recorder}</td>
@@ -454,9 +504,6 @@ async function loadRecordList() {
                 </td>
             `;
             
-            // 詳細表示と削除機能のイベントリスナーは、次のステップで実装します。
-            // ... (G. 記録リスト表示ロジック の loadRecordList 関数内) ...
-            // 削除ボタンと詳細ボタンのイベントリスナーを設定
             row.querySelector('.view-btn').addEventListener('click', () => {
                 showRecordDetail(record.recordId);
             });
@@ -466,12 +513,137 @@ async function loadRecordList() {
         });
     } catch (error) {
         console.error('記録リストの読み込みエラー:', error);
-        ELEMENTS_LIST.listBody.innerHTML = '<tr><td colspan="7">記録の読み込み中にエラーが発生しました。</td></tr>';
+        ELEMENTS.listBody.innerHTML = '<tr><td colspan="7">記録の読み込み中にエラーが発生しました。</td></tr>';
     }
 }
 
-// リストタブがアクティブになったときにリストを読み込む（C. タブ切替機能の呼び出しを更新）
-ELEMENTS.listTab.addEventListener('click', () => {
-    switchTab('list-tab');
-    loadRecordList(); // リスト表示に切り替える度に読み込み
+
+// =======================================================
+// G. データエクスポート (CSV / JSON 書き出し)
+// =======================================================
+
+/**
+ * すべての記録データをCSV形式に変換する
+ * @param {Array<object>} records - すべてのテイスティング記録
+ * @returns {string} CSV文字列
+ */
+function convertToCSV(records) {
+    if (records.length === 0) return 'No records found.';
+
+    const headers = [
+        "RecordID", "記録日時", "記録者", "ワイン名", "ワインタイプ", "自由記入欄", "写真枚数", "チェック項目詳細"
+    ];
+    let csv = headers.join(',') + '\n';
+
+    records.forEach(record => {
+        let tastingDetails = '';
+        if (record.tastingNotes) {
+            const flatNotes = {};
+            for (const key in record.tastingNotes) {
+                flatNotes[key] = record.tastingNotes[key].join('、');
+            }
+            // JSON文字列をエスケープしてCSVセルに格納
+            tastingDetails = JSON.stringify(flatNotes).replace(/"/g, '""');
+        }
+
+        const row = [
+            `"${record.recordId}"`,
+            `"${record.date}"`,
+            `"${record.recorder}"`,
+            `"${record.wineName}"`,
+            `"${record.wineType}"`,
+            `"${record.freeText.replace(/"/g, '""')}"`, // 自由記入欄をエスケープ
+            record.images.length,
+            `"${tastingDetails}"` 
+        ];
+
+        csv += row.join(',') + '\n';
+    });
+
+    return csv;
+}
+
+/**
+ * データをダウンロード可能なファイルとしてブラウザに提供する
+ * @param {string} data - ファイルコンテンツ
+ * @param {string} filename - ファイル名
+ * @param {string} mimeType - MIMEタイプ
+ */
+function downloadFile(data, filename, mimeType) {
+    const blob = new Blob([data], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+/**
+ * エクスポートボタンクリック時のメイン処理
+ */
+async function handleExport() {
+    try {
+        const records = await getAllRecords();
+
+        if (records.length === 0) {
+            alert('エクスポートする記録がありません。');
+            return;
+        }
+
+        const format = prompt("エクスポート形式を選択してください (1: CSV, 2: JSON)", "1");
+
+        if (format === '1') {
+            const csvData = convertToCSV(records);
+            const filename = `Tasting_Records_${new Date().toISOString().slice(0, 10)}.csv`;
+            downloadFile(csvData, filename, 'text/csv;charset=utf-8;');
+            alert(`CSVファイル (${filename}) のダウンロードを開始します。`);
+        } else if (format === '2') {
+            const jsonString = JSON.stringify(records, null, 2);
+            const filename = `Tasting_Records_${new Date().toISOString().slice(0, 10)}.json`;
+            downloadFile(jsonString, filename, 'application/json');
+            alert(`JSONファイル (${filename}) のダウンロードを開始します。`);
+        } else {
+            alert('エクスポートをキャンセルしました。');
+        }
+        
+    } catch (error) {
+        console.error('データエクスポートエラー:', error);
+        alert('データのエクスポート中にエラーが発生しました。');
+    }
+}
+
+
+// =======================================================
+// H. 初期設定とイベントリスナーの登録
+// =======================================================
+
+// フォーム送信時に保存ロジックを実行
+ELEMENTS.tastingForm.addEventListener('submit', collectAndSaveRecord);
+
+// エクスポートボタンにイベントリスナーを設定
+ELEMENTS.exportButton.addEventListener('click', handleExport);
+
+// 初期ロード時のフォーム生成とDB接続
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. 初期フォームの生成
+    switchWineType('white');
+
+    // 2. DB接続
+    openDB().catch(err => {
+        alert('データベースの初期化に失敗しました。記録の保存ができません。');
+    });
+
+    // 3. モーダルの閉じる処理
+    ELEMENTS.closeBtn.addEventListener('click', () => {
+        ELEMENTS.detailModal.classList.remove('visible');
+    });
+    window.addEventListener('click', (event) => {
+        if (event.target === ELEMENTS.detailModal) {
+            ELEMENTS.detailModal.classList.remove('visible');
+        }
+    });
 });
