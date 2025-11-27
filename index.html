@@ -70,7 +70,7 @@
         <section id="list-area" class="hidden">
             <h2>記録リスト</h2>
             <div id="list-controls">
-                <p>フィルタリングやデータ書き出しボタンがここに配置されます。</p>
+                <button id="export-data-btn">📤 データ書き出し (CSV/JSON)</button>
             </div>
             <table id="tasting-list-table">
                 <thead>
@@ -87,18 +87,18 @@
                 <tbody id="list-body">
                     </tbody>
             </table>
-            <button id="export-data-btn">📤 データ書き出し (CSV/JSON)</button>
         </section>
-        <div id="detail-modal" class="modal hidden">
+    </main>
+
+    <div id="detail-modal" class="modal hidden">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <h2>テイスティング記録 詳細</h2>
             <div id="detail-content">
                 </div>
         </div>
-        </div>
-    </main>
-
+    </div>
+    
     <script src="data/white_wine_data.js"></script>
     <script src="data/red_wine_data.js"></script>
     <script src="script.js"></script>
