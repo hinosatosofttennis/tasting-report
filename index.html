@@ -58,6 +58,43 @@
                         <p>選択された写真がここに表示されます。</p>
                     </div>
                 </fieldset>
+                <div class="wine-selection">
+  <button type="button" onclick="selectWineType('red')">赤ワイン</button>
+  <button type="button" onclick="selectWineType('white')">白ワイン</button>
+</div>
+
+<div id="basic-info-area" style="display: none; margin-top: 20px; padding: 15px; border: 1px solid #ccc;">
+  
+  <h3>基本情報</h3>
+
+  <div class="form-group">
+    <label>収穫年</label>
+    <input type="text" id="vintage-input" placeholder="例: 2023" maxlength="4" pattern="\d{4}" inputmode="numeric">
+  </div>
+
+  <div class="form-group">
+    <label>生産地</label>
+    <select id="country-select">
+      <option value="">選択してください</option>
+      <option value="フランス">フランス</option>
+      <option value="イタリア">イタリア</option>
+      <option value="スペイン">スペイン</option>
+      <option value="アメリカ">アメリカ</option>
+      <option value="チリ">チリ</option>
+      <option value="オーストラリア">オーストラリア</option>
+      <option value="日本">日本</option>
+      <option value="その他">その他</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>主なブドウ品種</label>
+    <select id="grape-select">
+      <option value="">先にワインの種類を選んでください</option>
+    </select>
+  </div>
+
+</div>
                 
                 <div id="tasting-sections">
                     <p class="placeholder-text">ワインタイプを選択してください。</p>
@@ -102,5 +139,65 @@
     <script src="data/white_wine_data.js"></script>
     <script src="data/red_wine_data.js"></script>
     <script src="script.js"></script>
+    <script>
+  // 品種リストのデータ定義
+  const grapeVarieties = {
+    red: [
+      "カベルネ・ソーヴィニヨン",
+      "ピノ・ノワール",
+      "メルロ",
+      "シラー／シラーズ",
+      "カベルネ・フラン",
+      "グルナッシュ",
+      "サンジョヴェーゼ",
+      "ネッビオーロ",
+      "テンプラニーリョ",
+      "マスカット・ベーリーA",
+      "その他"
+    ],
+    white: [
+      "シャルドネ",
+      "ソーヴィニヨン・ブラン",
+      "リースリング",
+      "甲州",
+      "シュナン・ブラン",
+      "ゲヴュルツトラミネール",
+      "ヴィオニエ",
+      "セミヨン",
+      "ピノ・グリ",
+      "ミュスカデ",
+      "その他"
+    ]
+  };
+
+  /**
+   * ワインの種類が選ばれたときに実行する関数
+   * @param {string} type - 'red' または 'white'
+   */
+  function selectWineType(type) {
+    // 1. 入力エリアを表示する
+    document.getElementById('basic-info-area').style.display = 'block';
+
+    // 2. ブドウ品種のセレクトボックスを取得
+    const grapeSelect = document.getElementById('grape-select');
+
+    // 3. 今ある選択肢を一度リセット（空にする）
+    grapeSelect.innerHTML = '<option value="">選択してください</option>';
+
+    // 4. 選ばれたタイプ（red/white）に応じたリストを取得
+    const list = grapeVarieties[type];
+
+    // 5. リストをループして <option> タグを追加していく
+    list.forEach(grape => {
+      const option = document.createElement('option');
+      option.value = grape;
+      option.textContent = grape;
+      grapeSelect.appendChild(option);
+    });
+    
+    // (オプション) 現在どちらが選ばれているか分かりやすくログ出し
+    console.log(type === 'red' ? "赤ワイン選択中" : "白ワイン選択中");
+  }
+    </script>
 </body>
 </html>
