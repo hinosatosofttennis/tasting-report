@@ -636,6 +636,10 @@ document.addEventListener('DOMContentLoaded', () => {
     openDB().catch(err => {
         alert('データベースの初期化に失敗しました。記録の保存ができません。');
     });
+    // ⭐ 【ここから追記】 ワインタイプ切替ボタンのイベントリスナーを追加 ⭐
+        ELEMENTS.toggleWhite.addEventListener('click', () => switchWineType('white'));
+        ELEMENTS.toggleRed.addEventListener('click', () => switchWineType('red'));
+        // ⭐ 【ここまで追記】 ⭐
 
     // 3. モーダルの閉じる処理
     ELEMENTS.closeBtn.addEventListener('click', () => {
