@@ -23,6 +23,38 @@ const ELEMENTS = {
     closeBtn: document.querySelector('.modal-content .close-btn'),
     exportButton: document.getElementById('export-data-btn')
 };
+// ... (既存の ELEMENTS オブジェクト定義の後) ...
+
+const METADATA_SELECTIONS = {
+    // 地域の選択肢（赤白共通）
+    regions: [
+        { value: "france", label: "フランス" },
+        { value: "italy", label: "イタリア" },
+        { value: "usa", label: "アメリカ" },
+        { value: "australia", label: "オーストラリア" },
+        { value: "chile", label: "チリ" },
+        { value: "other", label: "その他" }
+    ],
+    // 白ワインのブドウ品種
+    whiteGrapes: [
+        { value: "chardonnay", label: "シャルドネ" },
+        { value: "sauvignon_blanc", label: "ソーヴィニヨン・ブラン" },
+        { value: "riesling", label: "リースリング" },
+        { value: "pinot_gris", label: "ピノ・グリ" },
+        { value: "other", label: "その他" }
+    ],
+    // 赤ワインのブドウ品種
+    redGrapes: [
+        { value: "cabernet_sauvignon", label: "カベルネ・ソーヴィニヨン" },
+        { value: "merlot", label: "メルロー" },
+        { value: "pinot_noir", label: "ピノ・ノワール" },
+        { value: "syrah", label: "シラー" },
+        { value: "sangiovese", label: "サンジョヴェーゼ" },
+        { value: "other", label: "その他" }
+    ]
+};
+
+// ... (既存の DB 定義へ続く) ...
 
 const DB_NAME = 'TastingRecordDB';
 const DB_VERSION = 1;
@@ -103,8 +135,49 @@ function generateTastingSections(wineData) {
     return html;
 }
 
+// ... (既存の generateTastingSections 関数の後) ...
+
 /**
- * ワインタイプに応じてフォームを切り替える
+ * 収穫年、生産地、ブドウ品種の入力フィールドを生成する
+ * @param {string} type - 'white' または 'red'
+ * @returns {string} 生成されたHTML文字列
+ */
+function generateMetadataInputs(type) {
+    const grapeOptions = type === 'white' ? METADATA_SELECTIONS.whiteGrapes : METADATA_SELECTIONS.redGrapes;
+
+    // 選択肢のHTMLを生成するヘルパー関数
+    const createOptions = (options) => {
+        return options.map(opt => `<option value="${opt.value}">${opt.label}</option>`).join('');
+    };
+
+    return `
+        <div class="form-row">
+            <label for="harvest-year">収穫年 (数字4桁)</label>
+            <input type="number" id="harvest-year" name="harvestYear" min="1000" max="9999" placeholder="例: 2022">
+        </div>
+
+        <div class="form-row">
+            <label for="producer-region">生産地</label>
+            <select id="producer-region" name="producerRegion">
+                <option value="">-- 選択してください --</option>
+                ${createOptions(METADATA_SELECTIONS.regions)}
+            </select>
+        </div>
+
+        <div class="form-row">
+            <label for="main-grape">主なブドウ品種</label>
+            <select id="main-grape" name="mainGrape">
+                <option value="">-- 選択してください --</option>
+                ${createOptions(grapeOptions)}
+            </select>
+        </div>
+    `;
+}
+
+// ... (既存の switchWineType 関数の修正) ...
+
+/**
+ * ワインタイプに応じてフォームを切り替える (修正版)
  * @param {string} type - 'white' または 'red'
  */
 function switchWineType(type) {
@@ -119,8 +192,10 @@ function switchWineType(type) {
 
     // 2. フォームの中身を再生成して挿入
     ELEMENTS.tastingSections.innerHTML = generateTastingSections(data);
-}
 
+    // ⭐ 【ここを追記/修正】 メタデータ入力欄の生成 ⭐
+    document.getElementById('metadata-content').innerHTML = generateMetadataInputs(type);
+}
 
 // =======================================================
 // B. 写真プレビュー機能 (最大4枚、画質優先)
@@ -321,7 +396,9 @@ function deleteRecordFromDB(recordId) {
 async function collectAndSaveRecord(e) {
     e.preventDefault();
 
-    // 1. 基本情報の収集
+    // ... (collectAndSaveRecord 関数の先頭を修正) ...
+
+    // 1. 基本情報の収集 (修正部分)
     const form = e.target;
     const recordId = Date.now().toString(); 
 
@@ -332,6 +409,12 @@ async function collectAndSaveRecord(e) {
         wineName: form.elements['wineName'].value,
         wineType: currentWineType === 'white' ? '白ワイン' : '赤ワイン',
         freeText: form.elements['freeText'].value.trim(),
+        
+        // ⭐ 【ここを追記】 新しいメタデータフィールドの収集 ⭐
+        harvestYear: form.elements['harvest-year'].value,
+        producerRegion: form.elements['producer-region'].value,
+        mainGrape: form.elements['main-grape'].value,
+        
         tastingNotes: {},
         images: []
     };
