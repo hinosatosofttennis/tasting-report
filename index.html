@@ -59,43 +59,12 @@
                     </div>
                 </fieldset>
                 
-                 <fieldset class="wine-selection">
-                    <legend>追加情報</legend>                
-                <div class="wine-selection">
-                    <button type="button" onclick="selectWineType('white')" class="active">白ワイン</button>
-                    <button type="button" onclick="selectWineType('red')">赤ワイン</button>
-                    </div>
-                <div id="basic-info-area" style="display: none; margin-top: 10px; padding: 15px; border: 1px solid #ccc　margin-bottom: 20px;
-    border-radius: 5px;　;">
-                    <div class="form-group">
-                        <label>収穫年</label>
-                        <input type="text" id="vintage-input" placeholder="例: 2023" maxlength="4" pattern="\d{4}" inputmode="numeric">
+                <fieldset id="metadata-inputs" class="metadata-input-group">
+                    <legend>ワイン情報</legend>
+                    <div id="metadata-content">
                         </div>
-                    
-                    <div class="form-group">
-                        <label>生産地</label>
-                        <select id="country-select">
-                            <option value="">選択してください</option>
-                            <option value="フランス">フランス</option>
-                            <option value="イタリア">イタリア</option>
-                            <option value="スペイン">スペイン</option>
-                            <option value="アメリカ">アメリカ</option>
-                            <option value="チリ">チリ</option>
-                            <option value="オーストラリア">オーストラリア</option>
-                            <option value="日本">日本</option>
-                            <option value="その他">その他</option>
-                            </select>
-                        </div>
-                    
-                    <div class="form-group">
-                        <label>主なブドウ品種</label>
-                        <select id="grape-select">
+                </fieldset>
                             <option value="">先にワインの種類を選んでください</option>
-                            </select>
-                        </div>
-                    
-                    </div>
-                     </fieldset>
                 
                 <div id="tasting-sections">
                     <p class="placeholder-text">ワインタイプを選択してください。</p>
