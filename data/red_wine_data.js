@@ -17,7 +17,7 @@ window.redWineData = {
           {"comment": "紫がかった"},
           {"comment": "オレンジがかった"},
           {"comment": "黒みを帯びた"},
-          {"comment": "縁が明るい /"}
+          {"comment": "縁が明るい"}
         ],
         "メイン用語": [
           {"comment": "ルビー(ラズベリーレッド)"},
@@ -46,15 +46,15 @@ window.redWineData = {
         ]
       },
       "外観の印象": {
-        "熟成度": [
+        "若さ": [
           {"comment": "若々しい"},
           {"comment": "若い状態を抜けた"},
           {"comment": "やや熟成した"},
           {"comment": "熟成した"},
           {"comment": "酸化熟成のニュアンス"},
-          {"comment": "酸化が進んだ/"}
+          {"comment": "酸化が進んだ"}
         ],
-        "若さ/成熟度": [
+        "成熟度": [
           {"comment": "軽快な"},
           {"comment": "成熟度が高い"},
           {"comment": "濃縮感が強い"}
@@ -67,7 +67,7 @@ window.redWineData = {
           {"comment": "閉じている"},
           {"comment": "控えめ"},
           {"comment": "開いている"},
-          {"comment": "強い /"}
+          {"comment": "強い"}
         ]
       },
       "強さ/性質": {
@@ -96,7 +96,7 @@ window.redWineData = {
           {"comment": "バラ"},
           {"comment": "スミレ"},
           {"comment": "牡丹"},
-          {"comment": "ゼラニウム /"}
+          {"comment": "ゼラニウム"}
         ],
         "植物": [
           {"comment": "ピーマン"},
@@ -107,49 +107,58 @@ window.redWineData = {
           {"comment": "ローリエ"},
           {"comment": "杉"},
           {"comment": "針葉樹"},
-          {"comment": "ユーカリ /"}
+          {"comment": "ユーカリ"}
         ],
-        "ドライ/菌類": [
+        "ドライ": [
           {"comment": "ドライハーブ"},
           {"comment": "タバコ"},
           {"comment": "紅茶"},
-          {"comment": "スーボア /"},
+          {"comment": "スーボア"}
+        ],
+         "菌類": [
+          {"comment": "土"},
           {"comment": "キノコ"},
           {"comment": "トリュフ"}
         ]
       },
       "香辛料・芳香・化学物質": {
-        "香辛料/芳香": [
+        "香辛料": [
           {"comment": "黒胡椒"},
           {"comment": "丁子"},
           {"comment": "シナモン"},
           {"comment": "ナツメグ"},
-          {"comment": "甘草/"},
+          {"comment": "甘草"}
+        ],
+        "樽": [
           {"comment": "ヴァニラ"},
           {"comment": "ロースト"},
-          {"comment": "コーヒー"}
-        ],
-        "樽/動物/他": [
-          {"comment": "なめし皮/"},
-          {"comment": "樹脂"},
-          {"comment": "ヨード"},
-          {"comment": "ランシオ"},
+          {"comment": "コーヒー"},
           {"comment": "チョコレート"},
-          {"comment": "煙、薫製/"},
+          {"comment": "煙、薫製"}
+        ],
+        "動物": [
           {"comment": "動物的なニュアンス"},
           {"comment": "鉄分"},
           {"comment": "生肉"},
           {"comment": "グリエ"},
-          {"comment": "乾いた肉"}
+          {"comment": "乾いた肉"},
+          {"comment": "なめし皮"}
+        ],
+         "他": [
+          {"comment": "樹脂"},
+          {"comment": "ヨード"},
+          {"comment": "ランシオ"}
         ]
       },
       "香りの印象": {
-        "熟成感/特性": [
+        "熟成感": [
           {"comment": "若々しい"},
           {"comment": "嫌気的な"},
           {"comment": "熟成感が現れている"},
           {"comment": "酸化熟成の段階にある"},
-          {"comment": "酸化した/"},
+          {"comment": "酸化した"}
+        ]
+         "特性": [
           {"comment": "第1アロマが強い"},
           {"comment": "第2アロマが強い"},
           {"comment": "ニュートラル"},
@@ -197,15 +206,18 @@ window.redWineData = {
         ]
       },
       "バランス": {
-        "骨格/テクスチャー": [
+        "左上": [
           {"comment": "スマートな"},
           {"comment": "骨格のしっかりとした"},
           {"comment": "堅固な"},
-          {"comment": "痩せた、渇いた /"},
+          {"comment": "痩せた、渇いた"}
+        ]
+        "右上": [
           {"comment": "ジューシーな"},
           {"comment": "豊満な"},
-          {"comment": "左上/右上/下"},
-          {"comment": "力強い /"},
+          {"comment": "力強い"}
+        ]
+        "下": [
           {"comment": "流れるような"},
           {"comment": "ふくよかな"}
         ]
