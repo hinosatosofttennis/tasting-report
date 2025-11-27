@@ -1,5 +1,4 @@
 window.redWineData = {
-{
   "赤ワイン": {
     "外観": {
       "清澄度": [
@@ -261,6 +260,5 @@ window.redWineData = {
         {"comment": "主なブドウ品種"}
       ]
     }
-  }
   }
 };
