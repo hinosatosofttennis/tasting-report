@@ -1,0 +1,193 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+header {
+    background-color: #800000; /* ワインレッド */
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+main {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* タブコントロール */
+.tab-controls button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 5px 5px 0 0;
+    margin-right: 5px;
+}
+
+.tab-controls button.active {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    font-weight: bold;
+}
+
+/* セクションの表示/非表示 */
+section.hidden {
+    display: none;
+}
+
+/* フォームの共通スタイル */
+#record-area {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 0 5px 5px 5px;
+}
+
+fieldset {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+legend {
+    font-weight: bold;
+    padding: 0 10px;
+    color: #800000;
+}
+
+.form-row {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"], input[type="datetime-local"], textarea {
+    width: 98%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea#free-text {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* ワインタイプ切替ボタン */
+.wine-type-toggle {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.wine-type-toggle button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: 1px solid #800000;
+    background-color: #fff;
+    color: #800000;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.wine-type-toggle button.active {
+    background-color: #800000;
+    color: white;
+    font-weight: bold;
+}
+
+/* 写真プレビューエリア */
+.preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    border: 1px dashed #ccc;
+    padding: 10px;
+    min-height: 50px;
+    align-items: center;
+}
+
+.photo-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+}
+
+/* テイスティング項目エリアのスタイル（動的生成用） */
+.tasting-category {
+    margin-top: 15px;
+    padding-left: 10px;
+    border-left: 3px solid #ccc;
+}
+
+.tasting-category h3 {
+    margin: 5px 0 10px 0;
+    color: #333;
+}
+
+.tasting-subcategory {
+    margin-left: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.tasting-comment label {
+    display: inline-block;
+    margin-right: 15px;
+    font-weight: normal;
+}
+
+.tasting-comment input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* ボタン共通 */
+button[type="submit"], #export-data-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #800000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover, #export-data-btn:hover {
+    background-color: #a00000;
+}
+
+/* リストエリアのスタイル */
+#tasting-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+#tasting-list-table th, #tasting-list-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#tasting-list-table th {
+    background-color: #eee;
+}
