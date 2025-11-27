@@ -1,5 +1,4 @@
 window.whiteWineData = {
-{
   "白ワイン": {
     "外観": {
       "清澄度": [
@@ -15,7 +14,7 @@ window.whiteWineData = {
       "色調": {
         "補助用語": [
           {"comment": "グリーンがかった"},
-          {"comment": "黄金色がかった/"}
+          {"comment": "黄金色がかった"}
         ],
         "メイン用語": [
           {"comment": "レモンイエロー"},
@@ -49,12 +48,12 @@ window.whiteWineData = {
           {"comment": "やや発展した"},
           {"comment": "熟成のニュアンスが見える"},
           {"comment": "熟成した"},
-          {"comment": "酸化が進んだ/"}
+          {"comment": "酸化が進んだ"}
         ],
         "若さ/成熟度": [
           {"comment": "軽快な"},
           {"comment": "成熟度が高い"},
-          {"comment": "濃縮感がある /"}
+          {"comment": "濃縮感がある"}
         ],
         "発泡性": [
           {"comment": "気泡が見える"},
@@ -69,7 +68,7 @@ window.whiteWineData = {
           {"comment": "閉じている"},
           {"comment": "控えめ"},
           {"comment": "開いている"},
-          {"comment": "力強い /"}
+          {"comment": "力強い"}
         ]
       },
       "強さ/性質": {
@@ -111,14 +110,14 @@ window.whiteWineData = {
           {"comment": "アカシア"},
           {"comment": "白バラ"},
           {"comment": "キンモクセイ"},
-          {"comment": "菩提樹/"}
+          {"comment": "菩提樹"}
         ],
         "ハーブ": [
           {"comment": "ミント"},
           {"comment": "アニス"},
           {"comment": "ヴェルヴェーヌ"},
           {"comment": "草のような"},
-          {"comment": "タイム/"}
+          {"comment": "タイム"}
         ],
         "ナッツ": [
           {"comment": "フレッシュアーモンド"},
@@ -132,19 +131,19 @@ window.whiteWineData = {
           {"comment": "コリアンダー"},
           {"comment": "丁字"},
           {"comment": "香木"},
-          {"comment": "ジンジャーブレッド/"}
+          {"comment": "ジンジャーブレッド"}
         ],
         "ミネラル": [
           {"comment": "石灰"},
           {"comment": "火打石"},
-          {"comment": "貝殼"},
+          {"comment": "貝殻"},
           {"comment": "鉱物"},
-          {"comment": "海の香り /"}
+          {"comment": "海の香り"}
         ],
         "樽": [
           {"comment": "トースト"},
           {"comment": "ヴァニラ"},
-          {"comment": "煙、薫製/"}
+          {"comment": "煙、薫製"}
         ],
         "化学物質/他": [
           {"comment": "ペトロール (ケロセン)"},
@@ -165,7 +164,7 @@ window.whiteWineData = {
           {"comment": "嫌気的な"},
           {"comment": "発展的な"},
           {"comment": "熟成感が現れている"},
-          {"comment": "酸化熟成の段階/"},
+          {"comment": "酸化熟成の段階"},
           {"comment": "第1アロマが強い"},
           {"comment": "第2アロマが強い"},
           {"comment": "ニュートラル"},
@@ -216,15 +215,15 @@ window.whiteWineData = {
         "骨格/テクスチャー": [
           {"comment": "左下/左上/右上/右下"},
           {"comment": "豊潤な"},
-          {"comment": "厚みのある /"},
+          {"comment": "厚みのある"},
           {"comment": "まろやかな"},
           {"comment": "ふくよかな"},
           {"comment": "ねっとりした"},
           {"comment": "スムーズな"},
-          {"comment": "コンパクトな/"},
+          {"comment": "コンパクトな"},
           {"comment": "スリムな"},
           {"comment": "ドライな"},
-          {"comment": "引き締まった /"},
+          {"comment": "引き締まった"},
           {"comment": "ジューシーな"}
         ]
       },
@@ -281,5 +280,4 @@ window.whiteWineData = {
       ]
     }
   }
-}
 };
