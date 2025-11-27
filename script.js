@@ -33,6 +33,7 @@ const METADATA_SELECTIONS = {
         { value: "usa", label: "アメリカ" },
         { value: "australia", label: "オーストラリア" },
         { value: "chile", label: "チリ" },
+        { value: "japan", label: "日本" },
         { value: "other", label: "その他" }
     ],
     // 白ワインのブドウ品種
@@ -41,12 +42,13 @@ const METADATA_SELECTIONS = {
         { value: "sauvignon_blanc", label: "ソーヴィニヨン・ブラン" },
         { value: "riesling", label: "リースリング" },
         { value: "pinot_gris", label: "ピノ・グリ" },
-        { value: "pinot_gris", label: "甲州" },
-        { value: "pinot_gris", label: "シュナン・ブラン" },
-        { value: "pinot_gris", label: "ゲヴュルツトラミネール" },
-        { value: "pinot_gris", label: "ヴィオニエ" },
-        { value: "pinot_gris", label: "セミヨン" },
-        { value: "pinot_gris", label: "ミュスカデ" },
+        { value: "koshu", label: "甲州" },
+        { value: "chenin_blanc", label: "シュナン・ブラン" },
+        { value: "gewurztraminer", label: "ゲヴュルツトラミネール" },
+        { value: "viognier", label: "ヴィオニエ" },
+        { value: "semillon", label: "セミヨン" },
+        { value: "muscadet", label: "ミュスカデ" },
+        { value: "kyoho", label: "巨峰" },
         { value: "other", label: "その他" }
     ],
     // 赤ワインのブドウ品種
@@ -56,11 +58,11 @@ const METADATA_SELECTIONS = {
         { value: "pinot_noir", label: "ピノ・ノワール" },
         { value: "syrah", label: "シラー" },
         { value: "sangiovese", label: "サンジョヴェーゼ" },
-        { value: "sangiovese", label: "カベルネ・フラン" },
-        { value: "sangiovese", label: "グルナッシュ" },
-        { value: "sangiovese", label: "ネッビオーロ" },
-        { value: "sangiovese", label: "テンプラニーリョ" },
-        { value: "sangiovese", label: "マスカット・ベーリーA" },
+        { value: "cabernet_franc", label: "カベルネ・フラン" },
+        { value: "grenache", label: "グルナッシュ" },
+        { value: "nebbiolo", label: "ネッビオーロ" },
+        { value: "tempranillo", label: "テンプラニーリョ" },
+        { value: "muscat_bailey_a", label: "マスカット・ベーリーA" },
         { value: "other", label: "その他" }
     ]
 };
